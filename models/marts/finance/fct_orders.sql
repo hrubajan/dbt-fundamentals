@@ -1,3 +1,12 @@
+{{
+    config(
+        materialized='incremental',
+        incremental_strategy='merge',
+        unique_key = 'order_id',
+        on_schema_change = 'fail'
+    )
+}}
+
 with orders as  (
 
     select * from {{ ref ('stg_jaffle_shop__orders' )}}
@@ -33,3 +42,8 @@ order_payments as (
 )
 
 select * from final
+
+{% if is_incremental() %}
+where
+order_date >= (select max(order_date) from {{this}})
+{% endif %}

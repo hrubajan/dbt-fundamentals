@@ -1,0 +1,26 @@
+# snapshots:
+#   - name: string
+#     relation: relation # source('my_source', 'my_table') or ref('my_model')
+#     description:  markdown_string
+#     config:
+#       database: string
+#       schema: string
+#       alias: string
+#       strategy: timestamp | check
+#       unique_key: column_name_or_expression
+#       check_cols: [column_name] | all
+#       updated_at: column_name
+#       snapshot_meta_column_names: dictionary
+#       dbt_valid_to_current: string
+#       hard_deletes: ignore | invalidate | new_record
+
+snapshots:
+  - name: orders_snapshot
+    relation: source('jaffle_shop', 'orders')
+    description:  A snapshot of the orders table in the jaffle_shop source.
+    config:
+      database: DBT_SANDBOX
+      strategy: check
+      unique_key: id
+      check_cols: ['id','user_id','status','order_date']
+      hard_deletes: ignore

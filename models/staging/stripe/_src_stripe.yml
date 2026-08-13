@@ -1,6 +1,6 @@
 sources:
   - name: stripe
     database: DBT_SANDBOX
-    schema: JANA_DBT_LEARN_stripe
+    schema: JANA_DBTLEARN_stripe
     tables:
       - name: payment
